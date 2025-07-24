@@ -7,9 +7,14 @@ const User = require('../models/user.js');
 
 // we will build out our router logic here
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
     try {
-        res.render('applications/index.ejs');
+       const currentUser = await User.findById(req.session.user._id);
+       
+       
+        res.render('applications/index.ejs', {
+            applications: currentUser.applications,
+        });
     } catch (error) {
         console.log(error);
         res.redirect('/');
@@ -31,7 +36,7 @@ router.post('/', async (req, res) => {
         await currentUser.save();
         
         res.redirect(`/users/${currentUser._id}/applications`)
-        
+
     } catch (error) {
         console.log(error);
         res.redirect('/')
