@@ -37,7 +37,7 @@ app.use(
 app.use(passUserToView);
 
 app.use("/auth", authController)
-
+app.use(isSignedIn);
 app.get("/", async (req, res) => {
   if(req.session.user) {
     res.redirect(`/users/${req.session.user._id}/applications`);
@@ -46,7 +46,7 @@ app.get("/", async (req, res) => {
   }
 });
 
-app.use(isSignedIn);
+
 app.use('/users/:userId/applications', applicationsController)
 
 app.listen(port, () => {

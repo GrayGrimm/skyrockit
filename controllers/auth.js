@@ -11,7 +11,7 @@ router.get("/sign-up", (req, res) => {
 router.post("/sign-up", async (req, res) => {
     console.log(req.body)
     const userInDatabase = await User.findOne({ username: req.body.username });
-
+    console.log(userInDatabase)
     if (userInDatabase) {
         return res.send('Username already taken!');
     };
@@ -26,7 +26,6 @@ router.post("/sign-up", async (req, res) => {
     const user = await User.create(req.body);
     res.send(`Thanks for signing up ${user.username}`)
 
-    res.send("Form Submission Accepted!");
 });
 
 router.get("/sign-in", (req, res) => {
